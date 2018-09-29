@@ -1,0 +1,17 @@
+# Create a bucket in localstack S3 with name: photo
+aws --endpoint-url=http://localhost:4572 s3 mb s3://photo
+
+# List all the bucket to verify if the bucket is created
+aws --endpoint-url=http://localhost:4572 s3 ls
+
+# Copy a file to the photo raw folder
+aws --endpoint-url=http://localhost:4572 s3 cp ./sample/shiba-inu.jpg s3://photo/raw/
+
+# List the shiba-inu.jpg photo under the photo raw folder.
+aws --endpoint-url=http://localhost:4572 s3 ls s3://photo/raw/
+
+# Sync all the photo to your local sample directory after running the photo
+aws --endpoint-url=http://localhost:4572 s3 sync s3://photo/ ./sample/
+
+#. Invoke the function using sam local cli
+sam local invoke GenerateThumbnailFunction --log-file ./output.log -e event.json --docker-network localstack_default

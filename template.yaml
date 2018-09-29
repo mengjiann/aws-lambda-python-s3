@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Function to generate thumbnail
+Resources:
+  GenerateThumbnailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: function-generate-thumbnail
+      Handler: generate-thumbnails.lambda_handler
+      Description: To generate thumbnail
+      Runtime: python2.7
+      CodeUri: ./dist/
+      MemorySize: 256
+      Timeout: 120
+      Environment:
+        Variables:
+          OPACITY: 1.0
+          THUMBNAIL_QUALITY: 90
+          THUMBNAIL_NORMAL_WIDTH: 500
+          THUMBNAIL_NORMAL_HEIGHT: 300
+          THUMBNAIL_PATH: thumbnail
+          LOCALSTACK_S3_PATH: http://localstack:4572
